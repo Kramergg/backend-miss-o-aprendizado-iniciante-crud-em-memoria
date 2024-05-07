@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+app.use(express.json())
 
 app.get('/', function (req, res) {
   res.send('Hello World')
@@ -20,6 +21,22 @@ app.get("/personagens/:id", (req, res) => {
     const item = personagens[id - 1]
     // Enviamos o item como resposta
     res.send(item)
+})
+
+// Endpoint create [POST] /personagens
+
+app.post('/personagens', (req, res) => {
+
+  // Acessando o Body da requisição
+  const body = req.body
+
+  // Acessando a propiedade "nome" Body 
+  const novoItem = body.nome
+
+  // Adicionamos na lista de personagens usando o método "push"
+  personagens.push(novoItem)
+
+  res.send('item adicionado com sucesso!')
 })
 
 app.listen(3000, () => 'servidor rodando na porta 3000')
