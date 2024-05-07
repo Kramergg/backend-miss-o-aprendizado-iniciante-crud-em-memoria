@@ -35,31 +35,31 @@ app.post('/personagens', (req, res) => {
 
   // checa se o "nome" está presente no body
   if (!novoItem) {
-    return res.send("o corpo da requisição deve conter a propiedade `nome`")
+    return res.status(400).send("o corpo da requisição deve conter a propiedade `nome`").
   }
   // checar se o novoItem já existe
   if (personagens.includes(novoItem)) {
-    return res.send("Esse item ja existe na lista de personagens!!")
+    return res.status(409).send("Esse item ja existe na lista de personagens!!")
   }
 
   // Adicionamos na lista de personagens usando o método "push"
   personagens.push(novoItem)
 
-  res.send('item adicionado com sucesso:' + novoItem)
+  res.status(201).send('item adicionado com sucesso:' + novoItem)
 })
 
 app.put("/personagem/:id", (req, res) => {
   const id = req.params.id
   const body = req.body
   const novoItem = body.nome
-    // checa se o "nome" está presente no body
-    if (!novoItem) {
-      return res.send("o corpo da requisição deve conter a propiedade `nome`")
-    }
-    // checar se o novoItem já existe
-    if (personagens.includes(novoItem)) {
-      return res.send("Esse item ja existe na lista de personagens!!")
-    }
+     // checa se o "nome" está presente no body
+  if (!novoItem) {
+    return res.status(400).send("o corpo da requisição deve conter a propiedade `nome`").
+  }
+  // checar se o novoItem já existe
+  if (personagens.includes(novoItem)) {
+    return res.status(409).send("Esse item ja existe na lista de personagens!!")
+  }
   personagens[id - 1] = novoItem
   
   res.send("item atualizado com sucesso! " + id + ' - ' + novoItem )
