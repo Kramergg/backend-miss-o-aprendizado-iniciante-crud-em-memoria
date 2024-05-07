@@ -10,7 +10,7 @@ app.get('/', function (req, res) {
 const personagens  = ['Homem Aranha', 'Homem de Ferro', 'Super Homem', 'Goku']
 
 app.get("/personagens", (req, res) =>{
-    res.send(personagens)
+    res.send(personagens.filter(Boolean))
 })
 
 //Endpoint Read by ID [GET] /personagens/:id
@@ -48,6 +48,11 @@ app.put("/personagem/:id", (req, res) => {
   res.send("item atualizado com sucesso! " + id + ' - ' + novoItem )
 })
 
+app.delete("/personagens/:id", (req, res) => {
+  const id = req.params.id
+  delete personagens[id - 1]
+  res.send('deletado com sucesso:' + id )
+})
 
 
 app.listen(3000, () => 'servidor rodando na porta 3000')
