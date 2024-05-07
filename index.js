@@ -33,6 +33,15 @@ app.post('/personagens', (req, res) => {
   // Acessando a propiedade "nome" Body 
   const novoItem = body.nome
 
+  // checa se o "nome" está presente no body
+  if (!novoItem) {
+    return res.send("o corpo da requisição deve conter a propiedade `nome`")
+  }
+  // checar se o novoItem já existe
+  if (personagens.includes(novoItem)) {
+    return res.send("Esse item ja existe na lista de personagens!!")
+  }
+
   // Adicionamos na lista de personagens usando o método "push"
   personagens.push(novoItem)
 
@@ -43,6 +52,14 @@ app.put("/personagem/:id", (req, res) => {
   const id = req.params.id
   const body = req.body
   const novoItem = body.nome
+    // checa se o "nome" está presente no body
+    if (!novoItem) {
+      return res.send("o corpo da requisição deve conter a propiedade `nome`")
+    }
+    // checar se o novoItem já existe
+    if (personagens.includes(novoItem)) {
+      return res.send("Esse item ja existe na lista de personagens!!")
+    }
   personagens[id - 1] = novoItem
   
   res.send("item atualizado com sucesso! " + id + ' - ' + novoItem )
