@@ -36,7 +36,18 @@ app.post('/personagens', (req, res) => {
   // Adicionamos na lista de personagens usando o método "push"
   personagens.push(novoItem)
 
-  res.send('item adicionado com sucesso!')
+  res.send('item adicionado com sucesso:' + novoItem)
 })
+
+app.put("/personagem/:id", (req, res) => {
+  const id = req.params.id
+  const body = req.body
+  const novoItem = body.nome
+  personagens[id - 1] = novoItem
+  
+  res.send("item atualizado com sucesso! " + id + ' - ' + novoItem )
+})
+
+
 
 app.listen(3000, () => 'servidor rodando na porta 3000')
