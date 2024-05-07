@@ -19,6 +19,9 @@ app.get("/personagens/:id", (req, res) => {
     const id = req.params.id
     // Acessa o item da lista personagem usando o ID - 1
     const item = personagens[id - 1]
+    if (!item) {
+      return res.status(404).send("item não encontrado.")
+    }
     // Enviamos o item como resposta
     res.send(item)
 })
@@ -35,7 +38,7 @@ app.post('/personagens', (req, res) => {
 
   // checa se o "nome" está presente no body
   if (!novoItem) {
-    return res.status(400).send("o corpo da requisição deve conter a propiedade `nome`").
+    return res.status(400).send("o corpo da requisição deve conter a propiedade `nome`")
   }
   // checar se o novoItem já existe
   if (personagens.includes(novoItem)) {
@@ -52,14 +55,20 @@ app.put("/personagem/:id", (req, res) => {
   const id = req.params.id
   const body = req.body
   const novoItem = body.nome
+  if (!personagens[id -1]){
+    return res.status(404).send("item não encontrado.")
+  }
+
      // checa se o "nome" está presente no body
   if (!novoItem) {
-    return res.status(400).send("o corpo da requisição deve conter a propiedade `nome`").
+    return res.status(400).send("o corpo da requisição deve conter a propiedade `nome`")
   }
+
   // checar se o novoItem já existe
   if (personagens.includes(novoItem)) {
     return res.status(409).send("Esse item ja existe na lista de personagens!!")
   }
+
   personagens[id - 1] = novoItem
   
   res.send("item atualizado com sucesso! " + id + ' - ' + novoItem )
@@ -67,6 +76,9 @@ app.put("/personagem/:id", (req, res) => {
 
 app.delete("/personagens/:id", (req, res) => {
   const id = req.params.id
+  if (!personagens[id -1]){
+    return res.status(404).send("item não encontrado.")
+  }
   delete personagens[id - 1]
   res.send('deletado com sucesso:' + id )
 })
